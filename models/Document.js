@@ -12,10 +12,10 @@ export default (sequelize, DataTypes) => {
           allowNull: false
         },
         filepath: {
-          type: DataTypes.TEXT,
+          type: DataTypes.STRING(1024),
           allowNull: false,
           unique: true
-        },
+        },        
         filesize: {
           type: DataTypes.BIGINT
         }
