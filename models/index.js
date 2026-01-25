@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import Document from './Document.js';
+import DocumentModel from './Document.js'; // rename import
 
 const sequelize = new Sequelize(
   "erbdb",
@@ -8,21 +8,14 @@ const sequelize = new Sequelize(
   {
     host: "localhost",
     dialect: "mysql",
-    logging: false, // disable SQL logs in production
-    pool: {
-      max: 10,
-      min: 0,
-      acquire: 30000,
-      idle: 10000,
-    },
-    define: {
-      freezeTableName: true, // prevent pluralization
-      underscored: true,     // use snake_case columns
-    },
+    logging: false,
+    pool: { max: 10, min: 0, acquire: 30000, idle: 10000 },
+    define: { freezeTableName: true, underscored: true },
   }
 );
 
-const Document = Document(sequelize, Sequelize.DataTypes);
+// Initialize the model
+const Document = DocumentModel(sequelize, Sequelize.DataTypes);
 
 export {
   sequelize,
