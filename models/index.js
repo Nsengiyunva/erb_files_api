@@ -16,7 +16,7 @@ const sequelize = new Sequelize(
 );
 
 const Document = DocumentModel(sequelize, Sequelize.DataTypes);
-const ERBPaidList = ERBPaidListModel(sequelize, Sequelize.DataTypes);
+const ERBPaidList = ERBPaidModel(sequelize, Sequelize.DataTypes);
 
 export {
   sequelize,
