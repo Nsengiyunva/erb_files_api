@@ -15,17 +15,11 @@ const sequelize = new Sequelize(
   }
 );
 
-// Initialize the model
 const Document = DocumentModel(sequelize, Sequelize.DataTypes);
+const ERBPaidList = ERBPaidListModel(sequelize, Sequelize.DataTypes);
 
 export {
   sequelize,
-  Document
-};
-
-const ERBPaidList = ERBPaidModel(sequelize, Sequelize.DataTypes);
-
-export {
-  sequelize,
+  Document,
   ERBPaidList
-};
+}
