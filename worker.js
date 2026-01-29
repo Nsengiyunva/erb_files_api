@@ -1,6 +1,6 @@
 import { Worker } from 'bullmq';
 import connection from './config/connection.js';
-import { Document, sequelize } from './models/index.js';
+import { Document, ERBPaidList, sequelize } from './models/index.js';
 import { publisher } from './events.js';
 
 await sequelize.authenticate();
@@ -8,17 +8,33 @@ console.log('✅ DB connected (worker)');
 
 const worker = new Worker(
   'document-queue',
-  async job => {
+  async (job) => {
     console.log('📥 Job received:', job.data);
 
-    const { filename, filepath, filesize } = job.data;
+    const { filename, filepath, filesize, license_no } = job.data;
 
-    const [doc, created] = await Document.findOrCreate({
-      where: { filepath },
-      defaults: { filename, filesize }
+    let isCreated = false;
+
+    await sequelize.transaction(async (txn) => {
+      const [doc, created] = await Document.findOrCreate({
+        where: { filepath },
+        defaults: { filename, filesize },
+        transaction: txn
+      });
+
+      isCreated = created;
+
+      await ERBPaidList.update(
+        { license_status: 'UPLOADED' },
+        {
+          where: { license_no },
+          transaction: txn
+        }
+      );
     });
 
-    if (created) {
+    // ✅ publish ONCE, AFTER successful commit
+    if (isCreated) {
       await publisher.publish(
         'document-events',
         JSON.stringify({
@@ -38,5 +54,5 @@ const worker = new Worker(
 );
 
 worker.on('failed', (job, err) => {
-  console.error(`❌ Job ${job.id} failed:`, err);
+  console.error(`❌ Job ${job?.id} failed:`, err);
 });

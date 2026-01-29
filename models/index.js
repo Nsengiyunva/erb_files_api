@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import DocumentModel from './Document.js'; // rename import
+import ERBPaidModel from './ERBPaid.js';
 
 const sequelize = new Sequelize(
   "erbdb",
@@ -20,4 +21,11 @@ const Document = DocumentModel(sequelize, Sequelize.DataTypes);
 export {
   sequelize,
   Document
+};
+
+const ERBPaidList = ERBPaidModel(sequelize, Sequelize.DataTypes);
+
+export {
+  sequelize,
+  ERBPaidList
 };

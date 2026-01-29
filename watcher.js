@@ -3,6 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileQueue } from './file_queue.js';
 
+// const WATCH_DIR = '/var/ugpass/destination';
 const WATCH_DIR = '/home/user1/ERB/uploads';
 
 console.log(`👀 Watching ${WATCH_DIR}`);
