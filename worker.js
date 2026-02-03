@@ -87,15 +87,15 @@ async function startWorker() {
         isCreated = created;
 
         // ✅ Guard against undefined license_no
-        if (license_no) {
-          await ERBPaidList.update(
-            { license_status: 'UPLOADED' },
-            {
-              where: { reg_no: license_no },
-              transaction: txn
-            }
-          );
-        }
+        // if (license_no) {
+        //   await ERBPaidList.update(
+        //     { license_status: 'UPLOADED' },
+        //     {
+        //       where: { reg_no: license_no },
+        //       transaction: txn
+        //     }
+        //   );
+        // }
       });
 
       // ✅ Publish only AFTER successful commit
