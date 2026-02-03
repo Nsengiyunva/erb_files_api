@@ -47,9 +47,9 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileQueue } from './file_queue.js';
 
-const WATCH_DIR = '/home/user1/ERB/uploads/';
+const WATCH_DIR = '/var/ugpass/destination/';
 
-console.log(`👀 Watching ${WATCH_DIR}`);
+console.log(`👀 Watching-1 ${WATCH_DIR}`);
 
 const watcher = chokidar.watch(WATCH_DIR, {
   persistent: true,
