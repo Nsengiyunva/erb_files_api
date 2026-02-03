@@ -47,7 +47,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileQueue } from './file_queue.js';
 
-const WATCH_DIR = '/var/ugpass/destination';
+const WATCH_DIR = '/home/user1/ERB/uploads';
 
 console.log(`👀 Watching ${WATCH_DIR}`);
 
@@ -66,7 +66,7 @@ watcher.on('add', async (filePath) => {
     if (!stats.isFile()) return;
 
     const filename = path.basename(filePath);
-    const license_no = path.parse(filename).name; // 🔑 no extension
+    const license_no = path.parse(filename).name; 
 
     await fileQueue.add(
       'register-file',
